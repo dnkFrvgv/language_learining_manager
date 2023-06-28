@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using MediatR;
-// using Domain.Entities;
+using Domain.Entities;
 
-namespace Application.Language
+namespace Application.Languages
 {
   public class GetAll
   {
-    public class Query : IRequest<List<Domain.Entities.Language>>
+    public class Query : IRequest<List<Language>>
     {
 
     }
 
-    public class Handler : IRequestHandler<Query, List<Domain.Entities.Language>>
+    public class Handler : IRequestHandler<Query, List<Language>>
     {
 
       private readonly DataContext _context;
@@ -24,7 +24,7 @@ namespace Application.Language
         _context = context;
       }
 
-      public async Task<List<Domain.Entities.Language>> Handle(Query request, CancellationToken cancellationToken)
+      public async Task<List<Language>> Handle(Query request, CancellationToken cancellationToken)
       {
         return await _context.Languages.ToListAsync();
       }

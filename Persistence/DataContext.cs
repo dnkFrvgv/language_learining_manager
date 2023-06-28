@@ -8,14 +8,17 @@ using Domain.Entities;
 
 namespace Persistence
 {
-    public class DataContext : DbContext
+  public class DataContext : DbContext
+  {
+    public DataContext(DbContextOptions options) : base(options)
     {
-      public DataContext(DbContextOptions options) : base(options)
-      {
-        
-      }
 
-      public DbSet<Language> Languages {get; set;}
+    }
+
+    public DbSet<Language> Languages { get; set; }
+    public DbSet<Vocabulary> Vocabularies { get; set; }
+
+    public DbSet<VocabularyTag> TagsVocabulary { get; set; }
 
     public Task<Language> FindAsync(Guid id)
     {

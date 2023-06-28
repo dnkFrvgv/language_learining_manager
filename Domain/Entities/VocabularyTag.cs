@@ -8,5 +8,6 @@ namespace Domain.Entities
     public class VocabularyTag : BaseEntity
     {
         public string Title { get; set; }
+        public List<Vocabulary> Vocabularies { get; set; }
     }
 }

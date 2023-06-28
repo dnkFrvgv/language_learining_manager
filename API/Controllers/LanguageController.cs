@@ -7,14 +7,14 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 // using Microsoft.EntityFrameworkCore;
 using MediatR;
-using Application.Language;
+using Application.Languages;
 
 namespace API.Controllers
 {
-  public class LanguageController : BaseApiController
+  public class LanguagesController : BaseApiController
   {
     private readonly IMediator _mediator;
-    public LanguageController(IMediator mediator)
+    public LanguagesController(IMediator mediator)
     {
       _mediator = mediator;
     }

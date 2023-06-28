@@ -1,5 +1,5 @@
 using Application.Core;
-using Application.Language;
+using Application.Languages;
 using Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

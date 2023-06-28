@@ -18,13 +18,13 @@ namespace Persistence
                 {
                   Title = "English",
                   StartDate = new DateOnly(2021, 09, 13),
-                  LastUpdatedDate = DateTime.Now,
+                  LastStudiedDate = DateTime.Now,
                 },
                 new Language 
                 {
                   Title = "Spanish",
                   StartDate = new DateOnly(2023, 01, 13),
-                  LastUpdatedDate = DateTime.Now,
+                  LastStudiedDate = DateTime.Now,
                 }
             };
 

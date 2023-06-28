@@ -12,6 +12,7 @@ namespace Domain.Entities
       // public User User { get; set; }
       public string Title { get; set; }
       public DateOnly StartDate  { get; set; }
-      public DateTime LastUpdatedDate { get; set; }
+      public DateTime LastStudiedDate { get; set; }
+      // public List<Vocabulary> Vocabularies {get;set;}
     }
 }
