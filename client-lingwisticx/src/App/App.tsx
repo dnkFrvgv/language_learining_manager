@@ -2,27 +2,30 @@
 import React from 'react';
 import Sidebar from '../Components/Sidebar';
 import { css } from '@emotion/react';
-import Header from '../Components/Header';
-import { CssBaseline } from '@mui/material';
+import Navbar from '../Components/Navbar';
+import { Box, CssBaseline, Paper } from '@mui/material';
+import LanguageForm from '../Models/LanguageForm';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 // width: '230px',
 const content = css({
   paddingLeft: '230px',
   width: '100%',
+  backgroundColor: '#f2f2f2'
 })
 
 function App() {
 
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Sidebar/>
       <div css={content}>
-        <Header title={'Dashboard'}/>
+        <Navbar title={'Dashboard'}/>
 
-        <p>add a new language space</p>
       </div>
       <CssBaseline/>
-  </>
+    </LocalizationProvider>
   );
 }
 

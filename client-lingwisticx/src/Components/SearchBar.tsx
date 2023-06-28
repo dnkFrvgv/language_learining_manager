@@ -6,7 +6,6 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
 import { Language } from '../Models/Language';
-import SearchResult from './SearchResult';
 
 
 const searchInputStyle = css({
@@ -29,7 +28,7 @@ interface props {
   // setSearch: any
 }
 
-function HeaderSearchBar({}: props) {
+function SearchBar({}: props) {
   const [languagesAPIData, setlanguagesAPIData] = React.useState<Language[]>();
   
   
@@ -67,7 +66,7 @@ function HeaderSearchBar({}: props) {
     <Box sx={{ flexGrow: 1, paddingLeft: '10px'}}>
       <Box sx={{ flexGrow: 1,color: "#000", display: { xs: 'none', sm: 'flex' }}}>
       <InputBase 
-        placeholder="Search Language"
+        placeholder="Search Language Space"
         value={inputValue}
         onChange={(e)=> HandleInputChange(e.target.value)}
         startAdornment={<SearchIcon/>}
@@ -89,4 +88,4 @@ function HeaderSearchBar({}: props) {
   )
 }
 
-export default HeaderSearchBar;
+export default SearchBar;

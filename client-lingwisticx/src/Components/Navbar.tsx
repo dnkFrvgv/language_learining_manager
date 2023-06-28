@@ -4,11 +4,10 @@ import { css } from '@emotion/react'
 import { AppBar, Badge, Box, Grid, IconButton, InputBase, Toolbar, Typography } from '@mui/material'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SearchIcon from '@mui/icons-material/Search';
-import HeaderSearchBar from './HeaderSearchBar';
-import SearchResult from './SearchResult';
+import SearchBar from './SearchBar';
 import { Language } from '../Models/Language';
 
-const headerStyle = css({
+const navbarStyle = css({
   backgroundColor: '#fff'
 })
 
@@ -22,14 +21,14 @@ interface props{
 }
 
 
-function Header({title}:props) {
+function Navbar({title}:props) {
 
   const [searchResult, setSearchResult] = React.useState<Language[]>([]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
 
-      <AppBar position='static' css={headerStyle}>
+      <AppBar position='static' css={navbarStyle}>
         <Toolbar>
           <Grid container>
             <Grid item>
@@ -45,9 +44,7 @@ function Header({title}:props) {
               </Box>
             </Grid>
             <Grid item sm>
-              <HeaderSearchBar/>
-              <SearchResult results={searchResult} />
-
+              <SearchBar/>
             </Grid>
 
             <Grid item>
@@ -75,4 +72,4 @@ function Header({title}:props) {
     )
 }
 
-export default Header;
+export default Navbar;
