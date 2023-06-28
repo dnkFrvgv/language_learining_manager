@@ -78,7 +78,7 @@ function SearchBar({}: props) {
       {searchResults.length > 0 &&
     
         <Box
-        sx={{ flexGrow: 1, backgroundColor: "#fff", height: '300px', width: '50%', position: 'absolute', paddingLeft: '10px',color: "#000", display: { xs: 'none', sm: 'block' }}}
+        sx={{ flexGrow: 1, backgroundColor: "rgba(255, 255, 255, 0.8)", maxHeight: '300px', width: '50%', position: 'absolute', paddingLeft: '10px',color: "#000", display: { xs: 'none', sm: 'block' }}}
         >
           { searchResults.map( (result) => <p key={result.id}>{ result.title }</p>) }
 
