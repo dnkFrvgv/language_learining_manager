@@ -13,6 +13,11 @@ namespace API.Extentions
 
           services.AddEndpointsApiExplorer();
           services.AddSwaggerGen();
+          services.AddCors(options => {
+            options.AddPolicy("CorsPolicy", policy =>{
+              policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+            });
+          });
 
           services.AddDbContext<DataContext>(opt =>
           {
