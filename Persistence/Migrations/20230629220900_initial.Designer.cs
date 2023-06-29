@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230627180235_ChangeFieldTo_LastStudiedDate")]
-    partial class ChangeFieldTo_LastStudiedDate
+    [Migration("20230629220900_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,20 @@ namespace Persistence.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TagForVocab", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TagsForVocab");
+                });
+
             modelBuilder.Entity("Domain.Entities.Vocabulary", b =>
                 {
                     b.Property<Guid>("Id")
@@ -47,9 +61,6 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ExamplePhrase")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("LanguageId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -60,44 +71,46 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LanguageId");
-
                     b.ToTable("Vocabularies");
                 });
 
             modelBuilder.Entity("Domain.Entities.VocabularyTag", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("VocabularyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Title")
+                    b.Property<Guid>("TagId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("VocabularyId")
-                        .HasColumnType("TEXT");
+                    b.HasKey("VocabularyId", "TagId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("VocabularyId");
+                    b.HasIndex("TagId");
 
                     b.ToTable("VocabularyTag");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Vocabulary", b =>
-                {
-                    b.HasOne("Domain.Entities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId");
-
-                    b.Navigation("Language");
-                });
-
             modelBuilder.Entity("Domain.Entities.VocabularyTag", b =>
                 {
-                    b.HasOne("Domain.Entities.Vocabulary", null)
+                    b.HasOne("Domain.Entities.TagForVocab", "Tag")
+                        .WithMany("Vocabularies")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Vocabulary", "Vocabulary")
                         .WithMany("Tags")
-                        .HasForeignKey("VocabularyId");
+                        .HasForeignKey("VocabularyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tag");
+
+                    b.Navigation("Vocabulary");
+                });
+
+            modelBuilder.Entity("Domain.Entities.TagForVocab", b =>
+                {
+                    b.Navigation("Vocabularies");
                 });
 
             modelBuilder.Entity("Domain.Entities.Vocabulary", b =>

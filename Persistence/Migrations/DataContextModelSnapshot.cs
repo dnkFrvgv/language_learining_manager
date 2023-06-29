@@ -37,6 +37,20 @@ namespace Persistence.Migrations
                     b.ToTable("Languages");
                 });
 
+            modelBuilder.Entity("Domain.Entities.TagForVocab", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TagsForVocab");
+                });
+
             modelBuilder.Entity("Domain.Entities.Vocabulary", b =>
                 {
                     b.Property<Guid>("Id")
@@ -59,46 +73,46 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.VocabularyTag", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("VocabularyId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Title")
+                    b.Property<Guid>("TagId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.HasKey("VocabularyId", "TagId");
+
+                    b.HasIndex("TagId");
 
                     b.ToTable("VocabularyTag");
                 });
 
-            modelBuilder.Entity("VocabularyVocabularyTag", b =>
+            modelBuilder.Entity("Domain.Entities.VocabularyTag", b =>
                 {
-                    b.Property<Guid>("TagsId")
-                        .HasColumnType("TEXT");
+                    b.HasOne("Domain.Entities.TagForVocab", "Tag")
+                        .WithMany("Vocabularies")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("VocabulariesId")
-                        .HasColumnType("TEXT");
+                    b.HasOne("Domain.Entities.Vocabulary", "Vocabulary")
+                        .WithMany("Tags")
+                        .HasForeignKey("VocabularyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("TagsId", "VocabulariesId");
+                    b.Navigation("Tag");
 
-                    b.HasIndex("VocabulariesId");
-
-                    b.ToTable("VocabularyVocabularyTag");
+                    b.Navigation("Vocabulary");
                 });
 
-            modelBuilder.Entity("VocabularyVocabularyTag", b =>
+            modelBuilder.Entity("Domain.Entities.TagForVocab", b =>
                 {
-                    b.HasOne("Domain.Entities.VocabularyTag", null)
-                        .WithMany()
-                        .HasForeignKey("TagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Vocabularies");
+                });
 
-                    b.HasOne("Domain.Entities.Vocabulary", null)
-                        .WithMany()
-                        .HasForeignKey("VocabulariesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("Domain.Entities.Vocabulary", b =>
+                {
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }
