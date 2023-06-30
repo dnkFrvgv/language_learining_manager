@@ -6,17 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 using MediatR;
 using Domain.Entities;
+using Application.Core;
+
 
 namespace Application.Languages
 {
   public class GetAll
   {
-    public class Query : IRequest<List<Language>>
+    public class Query : IRequest<ResponseHandler<List<Language>>>
     {
 
     }
 
-    public class Handler : IRequestHandler<Query, List<Language>>
+    public class Handler : IRequestHandler<Query, ResponseHandler<List<Language>>>
     {
 
       private readonly DataContext _context;
@@ -24,9 +26,9 @@ namespace Application.Languages
         _context = context;
       }
 
-      public async Task<List<Language>> Handle(Query request, CancellationToken cancellationToken)
+      public async Task<ResponseHandler<List<Language>>> Handle(Query request, CancellationToken cancellationToken)
       {
-        return await _context.Languages.ToListAsync();
+        return ResponseHandler<List<Language>>.SuccessResponse(await _context.Languages.ToListAsync());
       }
     }
   }

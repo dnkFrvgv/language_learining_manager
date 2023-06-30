@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Core;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,21 +12,21 @@ namespace Application.Languages
 {
   public class Get
   {
-    public class Query : IRequest<Language>
+    public class Query : IRequest<ResponseHandler<Language>>
     {
       public Guid Id { get; set; }
     }
 
-    public class Handler : IRequestHandler<Query, Language>
+    public class Handler : IRequestHandler<Query, ResponseHandler<Language>>
     {
       private readonly DataContext _context;
       public Handler(DataContext context)
       {
         _context = context;
       }
-      public async Task<Language> Handle(Query request, CancellationToken cancellationToken)
+      public async Task<ResponseHandler<Language>> Handle(Query request, CancellationToken cancellationToken)
       {
-        return await _context.Languages.FindAsync(request.Id);
+        return ResponseHandler<Language>.SuccessResponse(await _context.Languages.FindAsync(request.Id));
       }
     }
   }
