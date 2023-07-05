@@ -10,25 +10,58 @@ namespace Persistence
     {
         public static async Task SeedData(DataContext context)
         {
-            if (context.Languages.Any()) return;
-            
-            var languages = new List<Language>
-            {
-                new Language 
-                {
-                  Title = "English",
-                  StartDate = new DateOnly(2021, 09, 13),
-                  LastStudiedDate = DateTime.Now,
-                },
-                new Language 
-                {
-                  Title = "Spanish",
-                  StartDate = new DateOnly(2023, 01, 13),
-                  LastStudiedDate = DateTime.Now,
-                }
-            };
+            if (!context.Languages.Any()) {
 
-            await context.Languages.AddRangeAsync(languages);
+            
+              var languages = new List<Language>
+              {
+                  new Language 
+                  {
+                    Title = "English",
+                  },
+                  new Language 
+                  {
+                    Title = "Spanish",
+                  },
+                  new Language
+                  {
+                    Title = "German",
+                  }
+              };
+
+              await context.Languages.AddRangeAsync(languages);
+            }
+
+            if (!context.Skills.Any()) {
+
+            
+              var coreSkills = new List<Skill>
+              {
+                new Skill
+                {
+                  Title = "Listening"
+                },
+                new Skill
+                {
+                  Title = "Reading"
+                },
+                new Skill
+                {
+                  Title = "Speaking"
+                },
+                new Skill
+                {
+                  Title = "Writing"
+                },
+                new Skill
+                {
+                  Title = "Grammar"
+                },
+              };
+
+              await context.Skills.AddRangeAsync(coreSkills);
+            
+            }
             await context.SaveChangesAsync();
         }
     }

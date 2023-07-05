@@ -12,7 +12,7 @@ namespace API.Controllers
   [Route("api/[controller]")]
   public class BaseApiController : ControllerBase
   {
-    protected IActionResult ActionResultHandler<T>(ResponseHandler<T> response)
+    protected IActionResult ApiActionResultHandler<T>(ResponseHandler<T> response)
     {
       if (response.Success)
       {

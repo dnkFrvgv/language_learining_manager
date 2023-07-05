@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class Skill : BaseEntity
-    {
-        public string Title { get; set; }
-    }
+  public class Skill : BaseEntity
+  {
+    public string Title { get; set; }
+  }
 }

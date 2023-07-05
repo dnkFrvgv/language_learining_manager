@@ -7,17 +7,17 @@ namespace API.Controllers
 {
   public class VocabularyController : BaseApiController
   {
-    // private readonly IMediator _mediator;
-    // public VocabularyController(IMediator mediator)
-    // {
-    //   _mediator = mediator;
-    // }
+    private readonly IMediator _mediator;
+    public VocabularyController(IMediator mediator)
+    {
+      _mediator = mediator;
+    }
 
-    // [HttpGet]
-    // public async Task<ActionResult<List<Vocabulary>>> GetVocabularies() // should return by languageId
-    // {
-    //   return await _mediator.Send(new GetAll.Query());
-    // }
+    [HttpGet]
+    public async Task<IActionResult> GetVocabularies() // should return by languageId
+    {
+      return ApiActionResultHandler(await _mediator.Send(new GetAll.Query()));
+    }
 
     // [HttpGet("{id}")]
     // public async Task<ActionResult<Vocabulary>> GetVocabularyById(Guid id)
@@ -25,11 +25,11 @@ namespace API.Controllers
     //   return Ok(await _mediator.Send(new Get.Query { Id = id }));
     // }
 
-    // [HttpPost]
-    // public async Task<IActionResult> CreateVocabulary(GetVocabularyDTO vocabulary)
-    // {
-    //   return Ok(await _mediator.Send(new Create.Command{Vocabulary=vocabulary}));
-    // }
+    [HttpPost]
+    public async Task<IActionResult> CreateVocabulary(GetVocabularyDTO vocabulary)
+    {
+      return Ok(await _mediator.Send(new Create.Command { Vocabulary = vocabulary }));
+    }
 
   }
 }

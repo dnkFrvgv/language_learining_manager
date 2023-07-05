@@ -15,7 +15,9 @@ namespace Persistence
 
     }
 
+    public DbSet<LearningSpace> LearningSpaces {get;set;}
     public DbSet<Language> Languages { get; set; }
+    public DbSet<Skill> Skills { get; set; }
     public DbSet<Vocabulary> Vocabularies { get; set; }
 
     public DbSet<TagForVocab> TagsForVocab { get; set; }
@@ -36,6 +38,11 @@ namespace Persistence
         .HasOne(vt => vt.Tag)
         .WithMany(vt => vt.Vocabularies)
         .HasForeignKey(vt => vt.TagId);
+
+      modelBuilder.Entity<LearningSpace>()
+        .HasOne(b => b.Language)
+        .WithMany(a => a.LearningSpaces)
+        .HasForeignKey(b => b.LanguageId);
     }
     public Task<Language> FindAsync(Guid id)
     {
