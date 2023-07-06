@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Application.Core;
 using Application.DTO;
 using Persistence;
 using Domain.Entities;
+using FluentValidation;
 
 namespace Application.LearningSpaces
 {
@@ -14,7 +11,15 @@ namespace Application.LearningSpaces
   {
     public class Command : IRequest<ResponseHandler<Unit>>
     {
-      public LearningSpaceDto LanguageSpace { get; set; }
+      public LearningSpaceDto LearningSpace { get; set; }
+    }
+
+    public class CommandValidator : AbstractValidator<Command>
+    {
+      public CommandValidator()
+      {
+        RuleFor(c => c.LearningSpace).SetValidator(new LearningSpaceDtoValidator());
+      }
     }
 
     public class Handler : IRequestHandler<Command, ResponseHandler<Unit>>
@@ -28,7 +33,7 @@ namespace Application.LearningSpaces
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
         var vocabulariesList = new List<VocabularyTag>();
-        var language = await _context.Languages.FindAsync(request.LanguageSpace.LanguageId);
+        var language = await _context.Languages.FindAsync(request.LearningSpace.LanguageId);
 
         if (language == null)
         {
@@ -37,9 +42,9 @@ namespace Application.LearningSpaces
 
         var LearningSpace = new LearningSpace()
         {
-          Title = request.LanguageSpace.Title,
-          Description = request.LanguageSpace.Description,
-          StartDate = request.LanguageSpace.StartDate,
+          Title = request.LearningSpace.Title,
+          Description = request.LearningSpace.Description,
+          StartDate = request.LearningSpace.StartDate,
           Vocabularies = vocabulariesList,
           LastUdpatedDate = DateTime.Now,
           Language = language,

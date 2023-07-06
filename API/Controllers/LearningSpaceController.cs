@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Application.LearningSpaces;
 using Application.DTO;
-using Domain.Entities;
 
 namespace API.Controllers
 {
@@ -27,7 +22,7 @@ namespace API.Controllers
     [HttpPost]
     public async Task<IActionResult> CreateLearningSpace(LearningSpaceDto learningSpace)
     {
-      return ApiActionResultHandler(await _mediator.Send(new Create.Command{LanguageSpace=learningSpace}));
+      return ApiActionResultHandler(await _mediator.Send(new Create.Command { LearningSpace = learningSpace }));
     }
   }
 }
