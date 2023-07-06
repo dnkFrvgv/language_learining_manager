@@ -1,11 +1,11 @@
 import { Card,CardContent,CardActions,Typography, Box, Button} from '@mui/material'
 import React from 'react'
-import { Language } from '../Models/Language'
+import { LearningSpace } from '../Models/LearningSpace/LearningSpace'
 
 interface props{
-  language: Language
+  space: LearningSpace
 }
-function LanguageCard({language}: props) {
+function LearningSpaceCard({space}: props) {
   return (
     <>
     <Card sx={{marginRight:'15px', minWidth: 275, maxWidth: 275 }}>
@@ -14,15 +14,14 @@ function LanguageCard({language}: props) {
           Word of the Day
         </Typography>
         <Typography variant="h5" component="div">
-          {language.title}
+          {space.title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           adjective
         </Typography>
         <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+
+          {space.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -33,4 +32,4 @@ function LanguageCard({language}: props) {
   )
 }
 
-export default LanguageCard
+export default LearningSpaceCard

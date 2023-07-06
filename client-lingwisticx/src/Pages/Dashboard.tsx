@@ -1,10 +1,23 @@
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
+import LearningSpaceForm from '../Models/LearningSpace/LearningSpaceForm';
 import ListLanguageSpaces from '../Components/ListLanguageSpaces'
+import { Language } from '../Models/Language/Language';
 
 
 
 function Dashboard() {
+
+  const [languages, setlanguages] = React.useState<Language[]>([]);
+
+  // React.useEffect(()=>{
+  //   axios.get("http://localhost:5000/api/Languages")
+  //   .then(response=>{
+  //     setlanguagesAPIData(response.data)
+  //     console.log(response.data)
+  //   })
+  // }, [])
+
   return (
 
     <Box>
@@ -25,16 +38,17 @@ function Dashboard() {
                 component="div"    
                 sx={{ pb:2 }}        
               >
-                Language Spaces
+                Learing Spaces
               </Typography>
 
               <Button sx={{ mb:2 }} size="small" variant="contained">Add Space</Button>
             </Box>
 
 
-            {/* <Paper > */}
-            <ListLanguageSpaces/>
-            {/* </Paper> */}
+            <Paper sx={{width: '70%', p: 3 }}>
+            {/* <ListLanguageSpaces/> */}
+              <LearningSpaceForm/>
+            </Paper>
 
           </Box>
 

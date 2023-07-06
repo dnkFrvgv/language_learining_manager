@@ -4,10 +4,12 @@ import Sidebar from '../Components/Sidebar';
 import { css } from '@emotion/react';
 import Navbar from '../Components/Navbar';
 import { Box, CssBaseline, Paper } from '@mui/material';
-import LanguageForm from '../Models/LanguageForm';
+import LanguageForm from '../Models/Language/LanguageForm';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import Dashboard from '../Pages/Dashboard';
+import LanguageSpace from '../Pages/LanguageSpace';
+import VocabularySpace from '../Pages/VocabularySpace';
 
 // width: '230px',
 const content = css({
@@ -25,6 +27,8 @@ function App() {
       <div css={content}>
         <Navbar title={'Lingwisticx'}/>
 
+        {/* <LanguageSpace/> */}
+        {/* <VocabularySpace/> */}
         <Dashboard/>
 
       </div>
