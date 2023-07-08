@@ -5,7 +5,7 @@ import { AppBar, Badge, Box, Grid, IconButton, InputBase, Toolbar, Typography } 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './SearchBar';
-import { Language } from '../Models/Language';
+import { Language } from '../Models/Language/Language';
 
 const navbarStyle = css({
   backgroundColor: '#fff'

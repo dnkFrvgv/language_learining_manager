@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react'
 import { css } from '@emotion/react'
-import { AppBar, Badge, Box, Grid, IconButton, InputBase, Toolbar, Typography } from '@mui/material'
+import { AppBar, Badge, Box, Button, Grid, IconButton, InputBase, Toolbar, Typography } from '@mui/material'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SearchIcon from '@mui/icons-material/Search';
 import axios from 'axios';
-import { Language } from '../Models/Language';
+import { Language } from '../Models/Language/Language';
 
 
 const searchInputStyle = css({
@@ -36,7 +36,7 @@ function SearchBar({}: props) {
   const [inputValue, setInputValue] = React.useState("");
 
   React.useEffect(() => {
-    axios.get("http://localhost:5000/api/languages")
+    axios.get("http://localhost:5000/api/Languages")
       .then(response=>{
         setlanguagesAPIData(response.data)
         console.log(response.data)
@@ -66,7 +66,7 @@ function SearchBar({}: props) {
     <Box sx={{ flexGrow: 1, paddingLeft: '10px'}}>
       <Box sx={{ flexGrow: 1,color: "#000", display: { xs: 'none', sm: 'flex' }}}>
       <InputBase 
-        placeholder="Search Language Space"
+        placeholder="Search Learning Space"
         value={inputValue}
         onChange={(e)=> HandleInputChange(e.target.value)}
         startAdornment={<SearchIcon/>}
@@ -80,7 +80,13 @@ function SearchBar({}: props) {
         <Box
         sx={{ flexGrow: 1, backgroundColor: "rgba(255, 255, 255, 0.8)", maxHeight: '300px', width: '50%', position: 'absolute', paddingLeft: '10px',color: "#000", display: { xs: 'none', sm: 'block' }}}
         >
-          { searchResults.map( (result) => <p key={result.id}>{ result.title }</p>) }
+          { searchResults.map( (result) => 
+            <Box  css={{}}>
+                <Button sx={{px:3 }}key={result.id} size="small">
+              { result.title }
+                </Button>
+            </Box>
+          ) }
 
         </Box>
       }

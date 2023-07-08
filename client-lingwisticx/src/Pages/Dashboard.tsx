@@ -1,13 +1,20 @@
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
-import ListLanguageSpaces from '../Components/ListLanguageSpaces'
+import ListLearningSpaces from '../Components/ListLanguageSpaces'
 
-
+import { useNavigate } from 'react-router-dom';
+import LearningSpaceForm from '../Models/LearningSpace/LearningSpaceForm';
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const ShowForm = ()=>{
+    navigate('/test');
+  }
+
   return (
 
-    <Box>
+    <Box >
       <Grid container>
 
         <Grid item xs={7}>
@@ -25,16 +32,17 @@ function Dashboard() {
                 component="div"    
                 sx={{ pb:2 }}        
               >
-                Language Spaces
+                Learning Spaces
               </Typography>
 
-              <Button sx={{ mb:2 }} size="small" variant="contained">Add Space</Button>
+              <Button onClick={ShowForm} sx={{ mb:2 }} size="small" variant="contained">Add Space</Button>
             </Box>
 
 
-            {/* <Paper > */}
-            <ListLanguageSpaces/>
-            {/* </Paper> */}
+            <ListLearningSpaces/>
+            <Paper sx={{width: '60%', p: 3 }}> 
+              <LearningSpaceForm/>
+            </Paper>
 
           </Box>
 
