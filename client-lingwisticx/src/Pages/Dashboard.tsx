@@ -1,26 +1,20 @@
 import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
+import ListLearningSpaces from '../Components/ListLanguageSpaces'
+
+import { useNavigate } from 'react-router-dom';
 import LearningSpaceForm from '../Models/LearningSpace/LearningSpaceForm';
-import ListLanguageSpaces from '../Components/ListLanguageSpaces'
-import { Language } from '../Models/Language/Language';
-
-
 
 function Dashboard() {
+  const navigate = useNavigate();
 
-  const [languages, setlanguages] = React.useState<Language[]>([]);
-
-  // React.useEffect(()=>{
-  //   axios.get("http://localhost:5000/api/Languages")
-  //   .then(response=>{
-  //     setlanguagesAPIData(response.data)
-  //     console.log(response.data)
-  //   })
-  // }, [])
+  const ShowForm = ()=>{
+    navigate('/test');
+  }
 
   return (
 
-    <Box>
+    <Box >
       <Grid container>
 
         <Grid item xs={7}>
@@ -38,15 +32,15 @@ function Dashboard() {
                 component="div"    
                 sx={{ pb:2 }}        
               >
-                Learing Spaces
+                Learning Spaces
               </Typography>
 
-              <Button sx={{ mb:2 }} size="small" variant="contained">Add Space</Button>
+              <Button onClick={ShowForm} sx={{ mb:2 }} size="small" variant="contained">Add Space</Button>
             </Box>
 
 
-            <Paper sx={{width: '70%', p: 3 }}>
-            {/* <ListLanguageSpaces/> */}
+            <ListLearningSpaces/>
+            <Paper sx={{width: '60%', p: 3 }}> 
               <LearningSpaceForm/>
             </Paper>
 

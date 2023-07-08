@@ -3,12 +3,12 @@ import { Box, Grid } from '@mui/material'
 import React from 'react'
 import Header from '../Components/Header'
 
-function LanguageSpace() {
+function LearningSpace() {
   return (
     <Box>
       <Grid container>
         <Grid item xs={12}>
-          <Header title="German" subtitle="Language Space"/>
+          <Header title="German" subtitle="Learning Space"/>
 
         </Grid>
 
@@ -36,13 +36,10 @@ function LanguageSpace() {
 
         // last 3 journals
 
-        //
-
-
       </Grid>
     </Box>
 
   )
 }
 
-export default LanguageSpace
+export default LearningSpace

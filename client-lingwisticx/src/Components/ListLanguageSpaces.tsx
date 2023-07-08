@@ -3,9 +3,9 @@ import axios from 'axios'
 import React from 'react'
 import { Language } from '../Models/Language/Language';
 import { LearningSpace } from '../Models/LearningSpace/LearningSpace';
-import LearningSpaceCard from './LanguageCard'
+import LearningSpaceCard from './LearningSpaceCard'
 
-function ListLanguageSpaces() {
+function ListLearningSpaces() {
   const [learningSpaceList, setlearningSpaceList] = React.useState<LearningSpace[]>();
 
   React.useEffect(()=>{
@@ -35,4 +35,4 @@ function ListLanguageSpaces() {
   )
 }
 
-export default ListLanguageSpaces
+export default ListLearningSpaces
