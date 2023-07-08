@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using System.Text.Json.Serialization;
 
 namespace API.Extentions
 {
@@ -29,6 +30,12 @@ namespace API.Extentions
           services.AddAutoMapper(typeof(MappingProfile).Assembly);
           services.AddFluentValidationAutoValidation();
           services.AddValidatorsFromAssemblyContaining<Create>();
+
+          services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
 
           return services;
         }
