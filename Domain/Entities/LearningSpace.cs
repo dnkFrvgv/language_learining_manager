@@ -11,8 +11,10 @@ namespace Domain.Entities
     public string Description { get; set; }
     public DateOnly StartDate { get; set; }
     public DateTime LastUdpatedDate { get; set; }
-    public Language Language {get;set;}
-    public Guid LanguageId {get;set;}
-    public ICollection<VocabularyTag> Vocabularies{ get; set;}
+    public Language Language { get; set; }
+    public Guid LanguageId { get; set; }
+
+    public ICollection<VocabularyList> VocabularyLists { get; set; }
+    // public ICollection<VocabularyTag> Vocabularies{ get; set;}
   }
 }

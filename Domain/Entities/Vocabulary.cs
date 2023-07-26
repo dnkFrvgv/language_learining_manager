@@ -10,9 +10,12 @@ namespace Domain.Entities
     public string Title { get; set; }
     public string ExamplePhrase { get; set; }
     public string Translation { get; set; }
+    public DateTime Date { get; set; }
+    public StatusVocab Status { get; set; } = StatusVocab.NEW;
+    public VocabularyList VocabularyList { get; set; }
     // public Guid LanguageId {get;set;}
     // public Language Language { get; set; }
-    public ICollection<VocabularyTag> Tags { get; set; }
+    // public ICollection<VocabularyTag> Tags { get; set; }
 
     // add customTags vs fixed tags
     // fixed tags -> ajectives/nouns/verbs etc
@@ -26,6 +29,10 @@ namespace Domain.Entities
     */
 
     // add date field
+  }
 
+  public enum StatusVocab {
+    MEMORIZED = 1,
+    NEW = 2,
   }
 }

@@ -4,6 +4,7 @@ using Application.DTO;
 using Persistence;
 using Domain.Entities;
 using FluentValidation;
+using Domain;
 
 namespace Application.LearningSpaces
 {
@@ -32,7 +33,7 @@ namespace Application.LearningSpaces
       }
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var vocabulariesList = new List<VocabularyTag>();
+        var vocabulariesList = new List<VocabularyList>();
         var language = await _context.Languages.FindAsync(request.LearningSpace.LanguageId);
 
         if (language == null)
@@ -45,7 +46,7 @@ namespace Application.LearningSpaces
           Title = request.LearningSpace.Title,
           Description = request.LearningSpace.Description,
           StartDate = request.LearningSpace.StartDate,
-          Vocabularies = vocabulariesList,
+          VocabularyLists = vocabulariesList,
           LastUdpatedDate = DateTime.Now,
           Language = language,
           LanguageId = language.Id,
