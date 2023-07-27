@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.DTO;
 using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Core
 {
@@ -13,7 +14,9 @@ namespace Application.Core
       { 
         // CreateMap<Domain.Entities.Language, Domain.Entities.Language>();
 
-        CreateMap<LearningSpaceDto, Domain.Entities.LearningSpace>();
+        CreateMap<LearningSpaceDto, LearningSpace>();
+
+        CreateMap<VocabularyListDto, VocabularyList>();
       }
     }
 }
