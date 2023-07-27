@@ -8,5 +8,6 @@ namespace Domain.Entities
   public class Skill : BaseEntity
   {
     public string Title { get; set; }
+    public ICollection<Log> Logs { get; set; }
   }
 }

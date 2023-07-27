@@ -13,8 +13,7 @@ namespace Domain.Entities
     public DateTime LastUdpatedDate { get; set; }
     public Language Language { get; set; }
     public Guid LanguageId { get; set; }
-
+    public ICollection<Log> Logs { get; set; }
     public ICollection<VocabularyList> VocabularyLists { get; set; }
-    // public ICollection<VocabularyTag> Vocabularies{ get; set;}
   }
 }
