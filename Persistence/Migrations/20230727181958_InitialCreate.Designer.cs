@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -10,9 +11,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230727181958_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.8");
@@ -77,7 +80,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("SkillId")
+                    b.Property<Guid?>("SkillDedicatedId")
                         .HasColumnType("TEXT");
 
                     b.Property<TimeOnly>("TimeDedicated")
@@ -87,7 +90,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("LearningSpaceId");
 
-                    b.HasIndex("SkillId");
+                    b.HasIndex("SkillDedicatedId");
 
                     b.ToTable("Logs");
                 });
@@ -176,10 +179,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.Skill", "SkillDedicated")
-                        .WithMany("Logs")
-                        .HasForeignKey("SkillId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("SkillDedicatedId");
 
                     b.Navigation("LearningSpace");
 
@@ -216,11 +217,6 @@ namespace Persistence.Migrations
                     b.Navigation("Logs");
 
                     b.Navigation("VocabularyLists");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Skill", b =>
-                {
-                    b.Navigation("Logs");
                 });
 
             modelBuilder.Entity("Domain.Entities.VocabularyList", b =>
