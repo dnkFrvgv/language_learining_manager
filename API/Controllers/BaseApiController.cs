@@ -18,9 +18,9 @@ namespace API.Controllers
       {
         return Ok(response.Value);
       }
-      if (response.Success && response.Value == null)
+      if (response.NotFound)
       {
-        return NotFound();
+        return NotFound(response.Message);
       }
       return BadRequest(response.ErrorMessage);
     }
