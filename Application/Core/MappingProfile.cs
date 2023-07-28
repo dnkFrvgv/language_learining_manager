@@ -17,6 +17,8 @@ namespace Application.Core
         CreateMap<LearningSpaceDto, LearningSpace>();
 
         CreateMap<VocabularyListDto, VocabularyList>();
+
+        CreateMap<VocabularyDto, Vocabulary>();
       }
     }
 }

@@ -1,82 +1,64 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using Domain.Entities;
-// using MediatR;
-// using Microsoft.EntityFrameworkCore;
-// using Persistence;
-// using Application.Core;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Domain.Entities;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+using Application.Core;
+using Application.DTO;
+using AutoMapper;
 
-// namespace Application.Vocabularies
-// {
-//   public class Create
-//   {
-//     public class Command : IRequest<ResponseHandler<Unit>>
-//     {
-//       public GetVocabularyDTO Vocabulary { get; set; }
-//     }
+namespace Application.Vocabularies
+{
+  public class Create
+  {
+    public class Command : IRequest<ResponseHandler<Unit>>
+    {
+      public VocabularyDto Vocabulary { get; set; }
+    }
 
-//     public class Handler : IRequestHandler<Command, ResponseHandler<Unit>>
-//     {
+    public class Handler : IRequestHandler<Command, ResponseHandler<Unit>>
+    {
 
-//       private readonly DataContext _context;
-//       public Handler(DataContext context)
-//       {
-//         _context = context;
-//       }
-//       public async  Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
-//       {
+      private readonly DataContext _context;
+      public Handler(DataContext context)
+      {
+        _context = context;
+      }
+      public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
+      {
 
-//         var requestVocab = new Vocabulary()
-//         {
-//           Title = request.Vocabulary.Title,
-//           ExamplePhrase = request.Vocabulary.ExamplePhrase,
-//           Translation = request.Vocabulary.Translation,
-//         };
+        var vocabularyList = _context.VocabularyLists.Find(request.Vocabulary.VocabularyListId);
 
-//         var tags = new List<VocabularyTag>();
-//         foreach (var requestTag in (request.Vocabulary.Tags ?? Enumerable.Empty<string>()))
-//         {
-//           var tagInDatabase = await _context.TagsForVocab.FirstOrDefaultAsync(tag => tag.Title == requestTag);
+        if (vocabularyList == null)
+        {
+          return ResponseHandler<Unit>.FailResponse("Failed to create new vocabulary. Vocabulary List doesn't exist");
+        }
 
-//           if (tagInDatabase == null)
-//           {
-//             tagInDatabase = new TagForVocab() { Title = requestTag };
+        var vocabulary = new Vocabulary()
+        {
+          Title = request.Vocabulary.Title,
+          ContextPhrase = request.Vocabulary.ContextPhrase,
+          Translation = request.Vocabulary.Translation,
+          Source = request.Vocabulary.Source,
+          DateAdded = DateTime.Now,
+          Status = request.Vocabulary.Status,
+          VocabularyList = vocabularyList,
+          VocabularyListId = vocabularyList.Id
+        };
 
-//             await _context.TagsForVocab.AddAsync(tagInDatabase);
-//             await _context.SaveChangesAsync();
-//           }
+        _context.Vocabularies.Add(vocabulary);
 
-//           var vt = new VocabularyTag
-//           {
-//             Tag = tagInDatabase,
-//             Vocabulary = requestVocab
-//           };
+        var response = await _context.SaveChangesAsync() > 0;
 
-//           tags.Add(vt);
-//         }
+        if (!response){
+          return ResponseHandler<Unit>.FailResponse("Failed to create new vocabulary.");
+        }
 
-//         requestVocab.Tags=tags;
-
-//         _context.Vocabularies.Add(requestVocab);
-        
-//         var response = await _context.SaveChangesAsync() > 0;
-
-//         if (!response){
-//           ResponseHandler<Unit>.FailResponse("Failed to create new vocabulary");
-//         }
-
-//         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
-//       }
-//     }
-//   }
-
-//   public class GetVocabularyDTO
-//   {
-//     public string Title { get; set; }
-//     public string ExamplePhrase { get; set; }
-//     public string Translation { get; set; }
-//     public string[] Tags { get; set; }
-//   }
-// }
+        return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
+      }
+    }
+  }
+}
