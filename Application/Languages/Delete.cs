@@ -21,6 +21,12 @@ namespace Application.Languages
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
         var language = await _context.Languages.FindAsync(request.Id);
+
+        if (language == null)
+        {
+          return ResponseHandler<Unit>.NotFoundResponse("Language");
+        }
+        
         _context.Remove(language);
         await _context.SaveChangesAsync();
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);

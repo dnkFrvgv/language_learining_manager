@@ -27,7 +27,7 @@ namespace API.Controllers
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> EditLearningSpace(Guid id, VocabularyDto vocabulary)
+    public async Task<IActionResult> EditVocabulary(Guid id, VocabularyDto vocabulary)
     {
       return ApiActionResultHandler((await _mediator.Send(new Edit.Command { Vocabulary = vocabulary, Id=id })));
     }
@@ -39,7 +39,7 @@ namespace API.Controllers
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteLearningSpace(Guid id){
+    public async Task<IActionResult> DeleteVocabulary(Guid id){
       return ApiActionResultHandler((await _mediator.Send(new Delete.Command{Id=id})));
     }
 
