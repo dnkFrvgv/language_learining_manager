@@ -34,7 +34,7 @@ namespace Application.Vocabularies
 
         if (vocabularyList == null)
         {
-          return ResponseHandler<Unit>.FailResponse("Failed to create new vocabulary. Vocabulary List doesn't exist");
+          return ResponseHandler<Unit>.NotFoundResponse("Vocabulary list");
         }
 
         var vocabulary = new Vocabulary()
