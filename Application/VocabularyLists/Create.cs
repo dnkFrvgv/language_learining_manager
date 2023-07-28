@@ -14,14 +14,6 @@ namespace Application.VocabularyLists
       public VocabularyListDto VocabularyList { get; set; }
     }
 
-    // public class CommandValidator : AbstractValidator<Command>
-    // {
-    //   public CommandValidator()
-    //   {
-    //     RuleFor(c => c.LearningSpace).SetValidator(new LearningSpaceDtoValidator());
-    //   }
-    // }
-
     public class Handler : IRequestHandler<Command, ResponseHandler<Unit>>
     {
 
@@ -32,14 +24,14 @@ namespace Application.VocabularyLists
       }
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var vocabularies = new List<Vocabulary>();
         var space = await _context.LearningSpaces.FindAsync(request.VocabularyList.LearningSpaceId);
 
         if (space == null)
         {
-          return ResponseHandler<Unit>.FailResponse("This space doesn't exist on the database.");
+          return ResponseHandler<Unit>.NotFoundResponse("Learning Space");
         }
 
+        var vocabularies = new List<Vocabulary>();
         var VocabList = new VocabularyList()
         {
           Title = request.VocabularyList.Title,
@@ -48,7 +40,11 @@ namespace Application.VocabularyLists
         };
 
         _context.VocabularyLists.Add(VocabList);
-        await _context.SaveChangesAsync();
+        var response = await _context.SaveChangesAsync() > 0;
+
+        if(!response){
+          return ResponseHandler<Unit>.FailResponse("Failed to create new vocabulary list.");
+        }
 
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }

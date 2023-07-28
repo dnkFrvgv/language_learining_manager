@@ -1,7 +1,6 @@
 using Application.Core;
 using Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 
@@ -23,7 +22,14 @@ namespace Application.VocabularyLists
       }
       public async Task<ResponseHandler<VocabularyList>> Handle(Query request, CancellationToken cancellationToken)
       {
-        return ResponseHandler<VocabularyList>.SuccessResponse(await _context.VocabularyLists.FindAsync(request.Id));
+        var vocabList = await _context.VocabularyLists.FindAsync(request.Id);
+
+        if (vocabList == null)
+        {
+          return ResponseHandler<VocabularyList>.NotFoundResponse("Vocabulary List");
+        }
+
+        return ResponseHandler<VocabularyList>.SuccessResponse(vocabList);
       }
     }
   }

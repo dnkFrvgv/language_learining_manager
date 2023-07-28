@@ -20,9 +20,21 @@ namespace Application.VocabularyLists
       }
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var spaces = await _context.VocabularyLists.FindAsync(request.Id);
-        _context.Remove(spaces);
-        await _context.SaveChangesAsync();
+        var vocabList = await _context.VocabularyLists.FindAsync(request.Id);
+
+        if (vocabList == null)
+        {
+          return ResponseHandler<Unit>.NotFoundResponse("Vocabulary List");
+        }
+
+        _context.Remove(vocabList);
+        var response = await _context.SaveChangesAsync() > 0;
+
+        if (!response)
+        {
+          return ResponseHandler<Unit>.FailResponse("Failed to delete vocabulary list.");
+        }
+
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }
     }

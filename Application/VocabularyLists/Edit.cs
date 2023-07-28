@@ -27,14 +27,22 @@ namespace Application.VocabularyLists
 
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        // request.LearningSpace.Id = request.Id;
-
         var vocabularyList = await _context.VocabularyLists.FindAsync(request.Id);
 
+        if (vocabularyList == null)
+        {
+          return ResponseHandler<Unit>.NotFoundResponse("Vocabulary List");
+        }
+
         _mapper.Map(request.VocabularyList, vocabularyList);
+
+        var response = await _context.SaveChangesAsync() > 0;
         
-        await _context.SaveChangesAsync();
-        
+        if (!response)
+        {
+          return ResponseHandler<Unit>.FailResponse("Failed to edit vocabulary list");
+        }
+
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }
     }
