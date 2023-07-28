@@ -21,11 +21,16 @@ namespace Application.LearningSpaces
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
         var spaces = await _context.LearningSpaces.FindAsync(request.Id);
+
+        if(spaces == null){
+          return ResponseHandler<Unit>.NotFoundResponse("Learning Space");
+        }
+
         _context.Remove(spaces);
         await _context.SaveChangesAsync();
+        
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }
     }
-
-    }
+  }
 }

@@ -23,9 +23,7 @@ namespace Application.LearningSpaces
 
       public async Task<ResponseHandler<List<LearningSpace>>> Handle(Query request, CancellationToken cancellationToken)
       {
-        // .Include(a => a.Books)
         var LearningSpaces = await _context.LearningSpaces.Include(s=>s.Language).ToListAsync();
-        
 
         return ResponseHandler<List<LearningSpace>>.SuccessResponse(LearningSpaces);
       }

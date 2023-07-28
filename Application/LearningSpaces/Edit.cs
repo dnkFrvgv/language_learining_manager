@@ -1,7 +1,6 @@
 using Application.Core;
 using Application.DTO;
 using AutoMapper;
-using Domain.Entities;
 using MediatR;
 using Persistence;
 
@@ -28,11 +27,21 @@ namespace Application.LearningSpaces
 
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        // request.LearningSpace.Id = request.Id;
-
         var learningSpace = await _context.LearningSpaces.FindAsync(request.Id);
+
+        if (learningSpace == null)
+        {
+          return ResponseHandler<Unit>.NotFoundResponse("Learning Space");
+        }
+
         _mapper.Map(request.LearningSpace, learningSpace);
-        await _context.SaveChangesAsync();
+        var response = await _context.SaveChangesAsync() > 0;
+
+        if (!response)
+        {
+          return ResponseHandler<Unit>.FailResponse("Failed to edit Learning Space.");
+        }
+
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }
     }

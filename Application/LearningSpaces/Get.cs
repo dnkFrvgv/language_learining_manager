@@ -21,7 +21,13 @@ namespace Application.LearningSpaces
       }
       public async Task<ResponseHandler<LearningSpace>> Handle(Query request, CancellationToken cancellationToken)
       {
-        return ResponseHandler<LearningSpace>.SuccessResponse(await _context.LearningSpaces.FindAsync(request.Id));
+        var space = await _context.LearningSpaces.FindAsync(request.Id);
+
+        if(space == null){
+          return ResponseHandler<LearningSpace>.NotFoundResponse("Learning Space");
+        }
+
+        return ResponseHandler<LearningSpace>.SuccessResponse(space);
       }
     }
   }

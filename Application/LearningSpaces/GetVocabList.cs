@@ -3,6 +3,7 @@ using Domain.Entities;
 using MediatR;
 using Persistence;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Application.LearningSpaces
 {
@@ -25,8 +26,7 @@ namespace Application.LearningSpaces
       public async Task<ResponseHandler<List<VocabularyList>>> Handle(Query request, CancellationToken cancellationToken)
       {
 
-        var vocabularyLists = await _context.VocabularyLists.Include(s=>s.Vocabularies).ToListAsync();
-
+        var vocabularyLists = await _context.VocabularyLists.Where(v=>v.LearningSpaceId==request.LearningSpaceId).Include(s=>s.Vocabularies).ToListAsync();
 
         return ResponseHandler<List<VocabularyList>>.SuccessResponse(vocabularyLists);
       }

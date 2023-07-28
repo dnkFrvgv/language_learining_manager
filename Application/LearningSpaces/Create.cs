@@ -33,14 +33,14 @@ namespace Application.LearningSpaces
       }
       public async Task<ResponseHandler<Unit>> Handle(Command request, CancellationToken cancellationToken)
       {
-        var vocabulariesList = new List<VocabularyList>();
         var language = await _context.Languages.FindAsync(request.LearningSpace.LanguageId);
 
         if (language == null)
         {
-          return ResponseHandler<Unit>.FailResponse("This language doesn't exist in the database.");
+          return ResponseHandler<Unit>.NotFoundResponse("Language");
         }
 
+        var vocabulariesList = new List<VocabularyList>();
         var LearningSpace = new LearningSpace()
         {
           Title = request.LearningSpace.Title,
@@ -53,7 +53,11 @@ namespace Application.LearningSpaces
         };
 
         _context.LearningSpaces.Add(LearningSpace);
-        await _context.SaveChangesAsync();
+        var response = await _context.SaveChangesAsync() > 0;
+
+        if(!response){
+          return ResponseHandler<Unit>.FailResponse("Failed to create vocabulary list.");
+        }
 
         return ResponseHandler<Unit>.SuccessResponse(Unit.Value);
       }
