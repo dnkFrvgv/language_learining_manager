@@ -158,7 +158,7 @@ function Sidebar({open, setOpen}: props) {
         </List>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
+        <DrawerHeader />
         <Routes>
           {Links.map((item)=>(
             <Route key={item.title} path={item.path} Component={item.component}/>

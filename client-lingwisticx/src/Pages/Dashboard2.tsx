@@ -22,6 +22,8 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tooltip } from '@mui/material';
 import { Brightness4, Brightness7, Public } from '@mui/icons-material';
+import { useContextProvider } from '../Context/Hook';
+import { ThemeType } from '../Context/Context';
 
 const drawerWidth = 240;
 
@@ -48,8 +50,12 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function Dashboard2() {
+
+  const { state, toggleTheme } = useContextProvider();
+
+
   const [open, setOpen] = useState(false);
-  const [dark, setDark] = useState(true);
+  // const [dark, setDark] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -58,9 +64,9 @@ export default function Dashboard2() {
   const darkTheme = useMemo(()=>
     createTheme({
       palette: {
-        mode: dark ? 'dark' : 'light'
+        mode: state.theme
       }
-    })  ,[dark])
+    }) ,[state.theme])
 
 
 
@@ -96,8 +102,8 @@ export default function Dashboard2() {
             Lingwistcx
           </Typography>
 
-          <IconButton onClick={()=>setDark(!dark)} >
-            {dark? <Brightness7/> : <Brightness4/>}
+          <IconButton onClick={()=>toggleTheme()}>
+            {state.theme == ThemeType.light ? <Brightness7/> : <Brightness4/>}
 
           </IconButton>
         </Toolbar>

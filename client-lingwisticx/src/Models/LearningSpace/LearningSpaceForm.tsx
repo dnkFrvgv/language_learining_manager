@@ -1,130 +1,105 @@
-/** @jsxImportSource @emotion/react */
-import { FormControl } from '@mui/base';
-import { Button, createTheme, css, Grid } from '@mui/material';
-import axios from 'axios';
-import React from 'react'
-import DateInput from '../../Components/DateInput';
-import Input from '../../Components/Input';
-import Select from '../../Components/Select';
-import { Language } from '../Language/Language';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import moment from "moment";
+import { Close } from '@mui/icons-material'
+import { Box, Dialog, TextField, DialogContent, DialogContentText, DialogTitle, IconButton, DialogActions, Button } from '@mui/material'
+import React, { useEffect, useRef } from 'react'
+import { useContextProvider } from '../../Context/Hook'
 
-const initialFormValues = {
+
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import { ILearningSpaceForm } from '../../Interfaces/LearningSpaceFrom';
+
+
+const initialFormValues: ILearningSpaceForm = {
   title: '',
   description: '',
-  startDate: '',
-  languageId: '' 
+  // startDate: '',
+  // languageId: '' 
 }
 
 
-
 function LearningSpaceForm() {
+  // get state
+  const {state:{isLearningSpaceFormOpen}, closeLearningSpaceForm, createLearningSpace} = useContextProvider()
 
-  const [languages, setLanguages] = React.useState<Language[]>();
-
-  React.useEffect(()=>{
-    axios.get("http://localhost:5000/api/Languages")
-    .then(response=>{
-      setLanguages(response.data)
-      console.log(response.data)
-    })
-  
-  },[])
+  // request languages 
+  useEffect(()=>{
 
 
+  }, [])
 
-  const HandleInputChange = (change: React.ChangeEvent<HTMLInputElement>)=>{
-    const {name, value} = change.target;
-    
-    setValues({
-      ...values,
-      [name] : value
-    })
-    
-  }
-
-  const HandleDateChange = (change: Date)=>{
-    setValues({
-      ...values,
-      ["startDate"] : moment(change).format('YYYY-MM-DD')
-    })
-  }
-
-
+  // form values
   const [values, setValues] = React.useState(initialFormValues);
 
-  const SendForm=()=>{
-    
-    axios.post("http://localhost:5000/api/LearningSpace", values)
-    .then(response=>{
-      console.log(response.data)
-      console.log(response.status)
-    })
+  // fields refs
+  const titleRef = useRef()
+  const descriptionRef = useRef()
+
+
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+
+    createLearningSpace(values);
   }
 
   return (
-    <>
-    {languages &&
-    
-      
-      <form >
+    <Dialog open={isLearningSpaceFormOpen} onClose={closeLearningSpaceForm}> 
+      <DialogTitle>Create Learning Space
+        <IconButton
+          sx={{position: 'absolute', right: 10, top: 15}}
+         onClick={closeLearningSpaceForm}>
+          <Close/>
+        </IconButton>
+      </DialogTitle>
 
+      <form onSubmit={handleSubmit}>
+        <DialogContent dividers >
+          <DialogContentText>Please fill in the fields bellow</DialogContentText>
 
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-
-          <Input 
-            label="Name of this learning space"
-            value={values.title}
-            onChange={HandleInputChange}
-            name='title'
-            />
-        </Grid>
-        <Grid item xs={6}>
-          <DateInput
-            label="What day you started learning ?"
-            name="startDate"
-            // value={}
-            onChange={HandleDateChange}
-            />
-        </Grid>
-
-        <Grid item xs={6}>
-
-        <Select 
-          label='What Language are you learning?' 
-          value={values.languageId}
-          onChange={HandleInputChange}
-          name='languageId'
-          options={languages}
+          <TextField 
+            autoFocus
+            variant='standard'
+            margin='normal'
+            id='title'
+            label="Title"
+            type='text'
+            fullWidth
+            required
+            // onChange={}
+            inputRef={titleRef}
+            inputProps={{minLenght:2}}
           />
-        </Grid>
-        <Grid item xs={6}>
-        <Input 
-          label='Description' 
-          value={values.description}
-          onChange={HandleInputChange}
-          name='description'
-        />
-          {/* <Input 
-            label='What date you started learning this language?' 
-            value={values.startDate.toDateString()}
-            onChange={HandleInputChange}
-            name='startDate'
-          /> */}
-        </Grid>
 
-        <Grid>
-          <Button onClick={SendForm} size="small">Create</Button>
-        </Grid>
+          <TextField 
+            variant='standard'
+            margin='normal'
+            id='description'
+            label="Description"
+            type='text'
+            fullWidth
+            inputRef={descriptionRef}
+            inputProps={{minLenght:2}}
+          />
 
+          {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={['DateField', 'DateField']}>
+              <DateField
+                label="Controlled field"
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+              />
+            </DemoContainer>
+          </LocalizationProvider> */}
+        </DialogContent>
 
-      </Grid>
+        <DialogActions sx={{display: "flex", justifyContent:'center'}} >
+          <Button variant='contained' type='submit'>Submit</Button>
+        </DialogActions>
       </form>
-    }   </> 
-  
+      
+    </Dialog>
   )
 }
 

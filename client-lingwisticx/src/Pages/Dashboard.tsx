@@ -3,7 +3,7 @@ import React from 'react'
 import ListLearningSpaces from '../Components/ListLanguageSpaces'
 
 import { useNavigate } from 'react-router-dom';
-import LearningSpaceForm from '../Models/LearningSpace/LearningSpaceForm';
+import LearningSpacff from '../Models/LearningSpace/form';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ function Dashboard() {
 
             <ListLearningSpaces/>
             <Paper sx={{width: '60%', p: 3 }}> 
-              <LearningSpaceForm/>
+              <LearningSpacff/>
             </Paper>
 
           </Box>
