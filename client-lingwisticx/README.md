@@ -1,1 +1,2 @@
-- [ ] add Onsubmit reducer learning space form
+- [ ] validation of LS form
+- [ ] 

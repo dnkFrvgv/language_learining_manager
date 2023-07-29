@@ -4,9 +4,16 @@ import { ContextActionType } from "./ActionsType";
 
 export const ContextReducer = (state = INITIAL_STATE, action:DispatchAction): InitialState =>{
   switch (action.type) {
+
+    // THEME
     case ContextActionType.ToggleTheme:
       return { ...state, theme: state.theme == ThemeType.light ? ThemeType.dark: ThemeType.light}
 
+    // LANGUAGE
+    case ContextActionType.SetAllLanguages:
+      return { ...state, AllLanguages: action.payload}
+
+    // LEARNING SPACE
     case ContextActionType.OpenLearningSpaceForm: 
       return { ...state, isLearningSpaceFormOpen: true }
 

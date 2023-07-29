@@ -14,14 +14,11 @@ interface props {
 function DateInput({label, onChange, name, }: props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} >
-      {/* <DemoContainer components={['DatePicker']}> */}
-        <DatePicker  
+        <DatePicker
         disableFuture
 
         onChange={onChange}
-        // value={dayjs(value)}
         label={label} />
-      {/* </DemoContainer> */}
     </LocalizationProvider>
   )
 }

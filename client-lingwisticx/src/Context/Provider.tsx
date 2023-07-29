@@ -4,7 +4,7 @@ import { ContextActionType } from "./ActionsType";
 import { ContextReducer } from "./Reducer";
 
 import axios from 'axios';
-import { ILearningSpaceForm } from "../Interfaces/LearningSpaceFrom";
+import { ILearningSpaceForm } from "../Interfaces/ILearningSpaceFrom";
 
 interface Props {
   children: ReactNode
@@ -21,6 +21,14 @@ export const ContextProvider = ({children}: Props)=> {
   }, [dispatch])
 
   // LANGUAGES
+  const getAllLanguages = useCallback(async ()=>{
+    axios.get("http://localhost:5000/api/Languages")
+    .then(response=>{
+      dispatch({type: ContextActionType.SetAllLanguages, payload: response.data})
+
+    })
+
+  }, [dispatch])
 
 
   // LEARNING SPACE
@@ -57,6 +65,7 @@ export const ContextProvider = ({children}: Props)=> {
       value={{
         state, 
         toggleTheme, 
+        getAllLanguages,
         closeLearningSpaceForm,
         createLearningSpace,
         openLearningSpaceForm,

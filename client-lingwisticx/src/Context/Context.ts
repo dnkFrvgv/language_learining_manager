@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { LearningSpace } from "../Models/LearningSpace/LearningSpace";
 import LearningSpacff from "../Models/LearningSpace/form";
 import { User } from "../Models/User";
-import { ILearningSpaceForm } from "../Interfaces/LearningSpaceFrom";
+import { ILearningSpaceForm } from "../Interfaces/ILearningSpaceFrom";
 import { Language } from "../Models/Language/Language";
 
 export enum ThemeType{
@@ -22,14 +22,11 @@ export type InitialState  = typeof INITIAL_STATE;
 
 export const Context = createContext({
   state: INITIAL_STATE,
-
-  // theme
+  // THEME
   toggleTheme: () => {},
-  // languages
-
-  // requestAllLanguages: () => {},
-
-  // learning space
+  // LANGUAGE
+  getAllLanguages: () => {},
+  // LEARNING SPACE
   createLearningSpace: (values: ILearningSpaceForm) => {},
   closeLearningSpaceForm: () => {},
   openLearningSpaceForm: () => {},

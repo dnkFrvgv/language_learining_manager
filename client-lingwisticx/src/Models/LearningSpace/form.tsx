@@ -20,7 +20,7 @@ const initialFormValues = {
 
 
 
-function LearningSpacff() {
+function LearningSpaceForm() {
 
   const [languages, setLanguages] = React.useState<Language[]>();
 
@@ -128,4 +128,4 @@ function LearningSpacff() {
   )
 }
 
-export default LearningSpacff
+export default LearningSpaceForm
