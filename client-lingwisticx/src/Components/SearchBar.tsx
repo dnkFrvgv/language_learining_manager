@@ -35,14 +35,14 @@ function SearchBar({}: props) {
   const [searchResults, setSearchResults] = React.useState<Language[]>([]);
   const [inputValue, setInputValue] = React.useState("");
 
-  React.useEffect(() => {
-    axios.get("http://localhost:5000/api/Languages")
-      .then(response=>{
-        setlanguagesAPIData(response.data)
-        console.log(response.data)
-      })
+  // React.useEffect(() => {
+  //   axios.get("http://localhost:5000/api/Languages")
+  //     .then(response=>{
+  //       setlanguagesAPIData(response.data)
+  //       console.log(response.data)
+  //     })
     
-  }, []);
+  // }, []);
 
   const filterData =(text: string)=>{
     if(text == ""){

@@ -16,32 +16,28 @@ import SpaceStatistics from '../Pages/SpaceStatistics';
 import GeneralStatistics from '../Pages/GeneralStatistics';
 import PageNotFound from '../Pages/PageNotFound';
 import LearningSpaceForm from '../Models/LearningSpace/LearningSpaceForm';
+import Dashboard2 from '../Pages/Dashboard2';
+import Home from '../Pages/Home';
 
 // width: '230px',
 const content = css({
-  paddingLeft: '230px',
-  maxWidth: '100%',
-  minHeight: '100vh', 
-  backgroundColor: '#f2f2f2'
+  // paddingLeft: '230px',
+  // maxWidth: '100%',
+  // minHeight: '100vh', 
+  // backgroundColor: '#f2f2f2'
 })
 
 function App() {
 
   return (
       <main>
-        <Sidebar/>
+        {/* <Sidebar/> */}
         <div css={content}>
           <Navbar title={'Lingwisticx'}/>
         
           <Routes>
-            <Route path="/" Component={Dashboard} />
-            <Route path="/dashboard" Component={Dashboard} />
-            <Route path="/statistics" Component={GeneralStatistics} />
-            <Route path="/learningspace/:language" Component={LearningSpace}/>
-            <Route path="/learningspace/:language/vocabulary" Component={Vocabulary} />
-            <Route path="/learningspace/:language/statistics" Component={SpaceStatistics} />
-            <Route path="test" Component={LearningSpaceForm}/>
-            <Route path="*" Component={PageNotFound}/>
+            <Route path="dashboard/*" Component={Dashboard2} />
+            <Route path="*" Component={LearningSpace}/>
           </Routes>
         </div>
         {/* // <CssBaseline/> */}

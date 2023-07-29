@@ -8,15 +8,15 @@ import LearningSpaceCard from './LearningSpaceCard'
 function ListLearningSpaces() {
   const [learningSpaceList, setlearningSpaceList] = React.useState<LearningSpace[]>();
 
-  React.useEffect(()=>{
-    axios.get("http://localhost:5000/api/LearningSpace")
-      .then(response=>{
-        if (response.data.length > 0){
-          setlearningSpaceList(response.data)
-        }
-      })
+  // React.useEffect(()=>{
+  //   axios.get("http://localhost:5000/api/LearningSpace")
+  //     .then(response=>{
+  //       if (response.data.length > 0){
+  //         setlearningSpaceList(response.data)
+  //       }
+  //     })
     
-  }, [])
+  // }, [])
 
 
 
