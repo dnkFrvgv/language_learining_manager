@@ -11,7 +11,7 @@ namespace Application.DTO
         public DateTime LogDate { get; set; }
         public Guid SkillId { get; set; }     
         public Double ComprehensionLevel { get; set; }
-        public TimeOnly TimeDedicated { get; set; }
+fff         public TimeOnly TimeDedicated { get; set; }
         public String Notes { get; set; }
     }
 }
